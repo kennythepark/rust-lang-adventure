@@ -25,11 +25,19 @@ fn main() {
             .read_line(&mut guess)
             .expect("Failed to read line");
 
-        let guess: u32 = match guess
+        guess = guess
             .trim()
+            .to_string();
+
+        let guess: u32 = match guess
             .parse() {
                 Ok(num) => num,
-                Err(_) => continue,
+                Err(e) => {
+                    println!("Wrong input: {}.", guess);
+                    println!("Reason: {}.", e);
+                    println!("Please input another one!");
+                    continue;
+                },
             };
 
         println!("You guessed: {}", guess);
