@@ -28,7 +28,44 @@ fn shadowing_example() {
     println!("The value of x is: {}", x);
 }
 
+fn expression_in_block_example() {
+    /*
+
+    Expressions do not include ending semicolons. If you add
+    a semicolon to the end of an expression, you turn it into
+    a statement, which will then not return a value.
+
+    */
+    let y = {
+        let x = 3;
+        x + 1
+    };
+
+    println!("The value of y is: {}", y);
+}
+
+// This function will cause a panic past
+// n_pos value of 46.
+fn fibonacci(n_pos: u32) -> u32 {
+    let mut buffer: (u32, u32) = (0, 1);
+    let mut iter = 1;
+
+    while iter <= n_pos {
+        let (n_minus_2, n_minus_1) = buffer;
+        let n = n_minus_2 + n_minus_1;
+        println!("Result at iteration {}: {}", iter, n);
+
+        buffer = (n_minus_1, n);
+        iter += 1;
+    }
+
+    return buffer.1;
+}
+
 fn main() {
     mutability_example();
     shadowing_example();
+    expression_in_block_example();
+
+    println!("Fibonacci result: {}", fibonacci(40));
 }
